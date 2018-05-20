@@ -24,3 +24,7 @@ As part of this process however, you should look to refactor some of the code in
 Once you have completed your work, send us a link to your public repository.
 
 Good luck!
+
+## More details
+
+In reality would have used IOC like Unity if there is more time
