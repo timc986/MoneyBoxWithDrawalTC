@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Moneybox.App.DataAccess;
+using Moneybox.App.Domain.Services;
 using System;
 
 namespace Moneybox.App.Features
@@ -7,11 +8,13 @@ namespace Moneybox.App.Features
     public class TransferMoney : ITransferMoney
     {
         private IAccountRepository accountRepository;
+        private INotificationService notificationService;
         private ILog log;
 
-        public TransferMoney(IAccountRepository AccountRepository, ILog Log)
+        public TransferMoney(IAccountRepository AccountRepository, INotificationService NotificationService, ILog Log)
         {
             accountRepository = AccountRepository;
+            notificationService = NotificationService;
             log = Log;
         }
 
@@ -22,8 +25,8 @@ namespace Moneybox.App.Features
                 var from = accountRepository.GetAccountById(fromAccountId);
                 var to = accountRepository.GetAccountById(toAccountId);
 
-                from.WithdrawFrom(amount);
-                to.TransferTo(amount);
+                from.WithdrawFrom(amount, notificationService);
+                to.TransferTo(amount, notificationService);
 
                 accountRepository.Update(from);
                 accountRepository.Update(to);
@@ -32,7 +35,7 @@ namespace Moneybox.App.Features
             {
                 log.Error("Exception in TransferMoney", ex);
 
-                throw ex;
+                throw;
             }            
         }
     }

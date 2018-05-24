@@ -25,11 +25,11 @@ namespace Moneybox.App.Test.Features
             accountRepository = new Mock<IAccountRepository>();
             notificationService = new Mock<INotificationService>();
             log = new Mock<ILog>();
-            transferMoney = new TransferMoney(accountRepository.Object, log.Object);
+            transferMoney = new TransferMoney(accountRepository.Object, notificationService.Object, log.Object);
 
             //In reality will use IOC like Unity but might be overengineer for this project
-            fromAccount = new Account(notificationService.Object);
-            toAccount = new Account(notificationService.Object);
+            fromAccount = new Account();
+            toAccount = new Account();
         }
 
         [Test]

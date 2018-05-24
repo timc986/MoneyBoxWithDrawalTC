@@ -5,13 +5,6 @@ namespace Moneybox.App
 {
     public class Account
     {
-        private INotificationService notificationService;
-
-        public Account(INotificationService NotificationService)
-        {
-            notificationService = NotificationService;
-        }
-
         public const decimal PayInLimit = 4000m;
 
         public Guid Id { get; set; }
@@ -24,7 +17,7 @@ namespace Moneybox.App
 
         public decimal PaidIn { get; set; }
 
-        public void WithdrawFrom(decimal amount)
+        public void WithdrawFrom(decimal amount, INotificationService notificationService)
         {
             if (Balance - amount < 0m)
             {
@@ -40,7 +33,7 @@ namespace Moneybox.App
             Withdrawn = Withdrawn - amount;
         }
 
-        public void TransferTo(decimal amount)
+        public void TransferTo(decimal amount, INotificationService notificationService)
         {
             if (PaidIn + amount > PayInLimit)
             {

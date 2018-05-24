@@ -24,9 +24,9 @@ namespace Moneybox.App.Test.Features
             accountRepository = new Mock<IAccountRepository>();
             notificationService = new Mock<INotificationService>();
             log = new Mock<ILog>();
-            withdrawMoney = new WithdrawMoney(accountRepository.Object, log.Object);
+            withdrawMoney = new WithdrawMoney(accountRepository.Object, notificationService.Object, log.Object);
 
-            account = new Account(notificationService.Object);
+            account = new Account();
         }
 
         [Test]
